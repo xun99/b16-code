@@ -13,6 +13,9 @@ void radix_sort(const I &begin, const I &end,
                 int digit = num_digits_v<I>)
 {
     // WRITE YOUR CODE HERE
+    if (begin >= end) return;
+    
+    return;
 }
 
 #endif // __radix_sort__
