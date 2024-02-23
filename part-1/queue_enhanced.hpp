@@ -16,14 +16,16 @@ template <typename T> class Dequeue : public Queue<T>
     T &back()
     {
         // WRITE YOUR CODE HERE
-        return this->_storage[this->_tail]
+        assert(this->_size > 0);
+        return this->_storage[_tail()];
     }
 
     // Const-access the element at the back of the queue
     const T &back() const
     {
         // WRITE YOUR CODE HERE
-        return this->_storage[this->_tail]
+        assert(this->_size>0);
+        return this->_storage[_tail()];
     }
 
     // Add a new element to the front of the queue by copying
@@ -39,11 +41,16 @@ template <typename T> class Dequeue : public Queue<T>
     void dequeue_back()
     {
         // WRITE YOUR CODE HERE
+        assert(this->_size >= 1);
+        this->_size --;
+        this->_position = _tail();
     }
 
     // Remove all elements from the queue
     void clear() { 
         // WRITE YOUR CODE HERE
+        this->_position = 0; 
+        this->_size = 0;
     }
 
   protected:
@@ -52,6 +59,11 @@ template <typename T> class Dequeue : public Queue<T>
     {
         // WRITE YOUR CODE HERE
         assert(this->_size >= 0);
+        // second element from the back (in case of dequeueing at the back)
+        if(this->_position + 1 == this->_storage.size()) {
+            return 0;
+        }
+        return this->_position+1;
 
     }
 };
