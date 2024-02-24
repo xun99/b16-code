@@ -50,8 +50,10 @@ make_binary_tree_enhanced(const V &value,
         }
     };
     // link children to parent
-    if (tree->_left.get()) tree->_left.get()->_parent = tree.get();
-    if (tree->_right.get()) tree->_right.get()->_parent = tree.get();
+    // if (tree->_left.get()) tree->_left.get()->_parent = tree.get();
+    // or we can use friend functions
+    if (left(tree.get())) left(tree.get())->_parent = tree.get();
+    if (right(tree.get())) right(tree.get())->_parent = tree.get();
 
     return tree;
 }
