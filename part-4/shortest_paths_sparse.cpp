@@ -7,18 +7,22 @@ std::vector<hop_t> bellman_ford(const SparseGraph &graph, const int source,
                                 bool &has_negative_cycle)
 {
     const int V = static_cast<int>(graph.size()); //number of nodes
-    auto DP = std::vector<hop_t>(V, {inf, -1});
-    DP[source] = {0, source};
+    assert(0 <= source && source < V);
+
+    auto DP = std::vector<hop_t>(V, {inf, -1}); // D_v and P_v (from source to v)
+    DP[source] = {0, -1}; // D_u = 0 and P_u = -1 or u
 
     // WRITE YOUR CODE HERE
     for (int i = 0; i < V-1; i++) {
-        for (int u = 0; u < V; u++) {
-            for (const auto &edge : graph[u]) {
-                // path relaxation: source to v versus source to u to v
+        has_negative_cycle = false;
+        for (int r = 0; r < V; r++) {
+            for (const auto &edge : graph[r]) {
+                // path relaxation: source to v versus source to r to v
                 auto distance = DP[edge.vertex].weight; // from source to v (edge.vertex) 
-                auto alt_distance = DP[u].weight + edge.weight; // from source to u to v
+                auto alt_distance = DP[r].weight + edge.weight; // from source to r to v
                 if (alt_distance < distance) {
-                    DP[edge.vertex] = {alt_distance, u};
+                    DP[edge.vertex] = {alt_distance, r};
+                    has_negative_cycle = true; //????
                 }
             }
         }
@@ -47,9 +51,9 @@ std::vector<hop_t> dijkstra(const SparseGraph &graph, const int source)
     };
     priority_enqueue(queue, {0, source, source}, compare);
 
-    while(!queue.empty()) {
+    // while(!queue.empty()) {
         
-    }
+    // }
 
     return DP;
 }
