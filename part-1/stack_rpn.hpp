@@ -47,6 +47,8 @@ void divides(Stack<T> &stack)
 }
 
 // Overload the << operator to add elements to the stack
+
+// pass a pointer to function as an argument
 template <typename T>
 Stack<T>& operator<<(Stack<T>& stack, void (*func)(Stack<T>&)) {
     func(stack);
